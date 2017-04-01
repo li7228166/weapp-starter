@@ -1,0 +1,15 @@
+<template name="homeIcon">
+    <swiper class="homeIcon">
+        <block wx:for="{{items}}" wx:key="*this">
+            <swiper-item class="swiper-item">
+                <block wx:for="{{item}}" wx:key="*this">
+                    <navigator class="item" url="../product/index?title=navigate">
+                        <view>{{item.categoryName}}</view>
+                        <view class="sub">{{item.categoryType}}</view>
+                        <image src="{{item.categoryAvatar}}"  />
+                    </navigator>
+                </block>
+            </swiper-item>
+        </block>
+    </swiper>
+</template>

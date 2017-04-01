@@ -1,0 +1,68 @@
+@import '../../styles/variables';
+
+.homeSpecial {
+  border-top: 1px solid @border-color;
+  border-bottom: 1px solid @border-color;
+  background-color: #fff;
+  box-sizing: border-box;
+
+  .title {
+    text-align: center;
+    line-height: 70px;
+    color: #111;
+    font-size: 30px;
+  }
+
+  .preview {
+    position: relative;
+    line-height: 0;
+    &::after {
+      position: absolute;
+      bottom: 0;
+      content: '';
+      left: 50%;
+      margin-left: -15px;
+      border: 30px solid transparent;
+      border-bottom-color: #fff;
+    }
+    image {
+      width: 750px;
+      height: 400px;
+    }
+  }
+
+  swiper {
+    height: 315px;
+  }
+
+  .swiper-item {
+    width: 690px !important;
+  }
+
+  .item {
+    width: 230px;
+    display: inline-block;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: top;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    font-size: 28px;
+    image {
+      width: 200px;
+      height: 200px;
+    }
+    text {
+      display: block;
+      width: 100%;
+      padding: 5px 15px;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &.sub {
+        color: #fd322e;
+      }
+    }
+  }
+}

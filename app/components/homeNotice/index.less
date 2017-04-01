@@ -1,0 +1,51 @@
+@import '../../styles/variables';
+
+.homeNotice {
+  font-size: 28px;
+  padding: 15px 0;
+  box-sizing: border-box;
+  line-height: 40px;
+  background-color: #fff;
+  .label {
+    display: inline-block;
+    width: 160px;
+    font-weight: bold;
+    text-align: center;
+    color: @default-color;
+    border-right: 1px solid @border-color;
+    vertical-align: middle;
+  }
+  .items {
+    display: inline-block;
+    width: 580px;
+    padding-left: 20px;
+    box-sizing: border-box;
+    color: @title-color;
+    vertical-align: middle;
+    position: relative;
+    height: 40px;
+  }
+  .link {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms;
+    position: absolute;
+    color: @title-color;
+    display: block;
+    right: 0;
+    height: 100%;
+    top: 0;
+    left: 20px;
+    &.active {
+      pointer-events: auto;
+      opacity: 1;
+    }
+    &.navigator-hover {
+      background: transparent;
+      opacity: 0.8;
+    }
+  }
+}

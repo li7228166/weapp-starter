@@ -1,0 +1,21 @@
+<template name="homeBanner">
+    <swiper class="homeBanner" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" circular="{{true}}">
+        <block wx:for="{{items}}" wx:key="*this">
+            <block wx:if="{{item.documentSummary}}">
+                <swiper-item>
+                    <navigator url="../product/index?title=navigate">
+                        <image src="{{item.documentSummary}}" class="slide-image"/>
+                    </navigator>
+                </swiper-item>
+            </block>
+            <block wx:elif="{{!item.documentSummary}}">
+                <swiper-item>
+                    <navigator url="../product/index?title=navigate">
+                        <image src="{{item.productAvatar3||'http://7xovem.com2.z0.glb.qiniucdn.com/o_1b77agi8713rj1qvl70a1av51hu07.png?imageView2/2/w/750/h/380'}}"
+                               class="slide-image" model="{{'aspectFit'}}"/>
+                    </navigator>
+                </swiper-item>
+            </block>
+        </block>
+    </swiper>
+</template>

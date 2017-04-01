@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+
+.homeIcon {
+  border-top: 1px solid @border-color;
+  border-bottom: 1px solid @border-color;
+  background-color: #fff;
+  height: 224px;
+  box-sizing: border-box;
+  padding-top: 17px;
+  margin-bottom: 20px;
+  .swiper-item {
+    width: 630px !important;
+  }
+  .item {
+    width: 210px;
+    display: inline-block;
+    overflow: hidden;
+    text-align: center;
+    view {
+      font-size: 28px;
+      padding: 5px 0;
+      &.sub {
+        font-size: 20px;
+        color: @default-color;
+      }
+    }
+  }
+  image {
+    border-radius: 100%;
+    width: 115px;
+    height: 115px;
+  }
+}
