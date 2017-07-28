@@ -7,25 +7,27 @@ export default class Component {
         this.currentPage = pages[pages.length - 1];
     }
 
-    render() {
-        //合并data
-        this.currentPage.setData({
-            [this.name]: this.data
-        });
-        this.data = this.currentPage.data[this.name];
+    set data(obj) {
+        this._data = obj;
+        this.setData({})
+    }
 
-        //附加events
+    get data() {
+        return this._data;
+    }
+
+    set events(obj) {
         let newEvents = {};
-        for (let key in this.events) {
-            newEvents[`${this.name}_${key}`] = this.events[key];
+        for (let key in obj) {
+            newEvents[`${this.name}_${key}`] = obj[key];
         }
         Object.assign(this.currentPage, newEvents);
     }
 
     setData(obj) {
         this.currentPage.setData({
-            [this.name]: deepAssign({}, this.data, obj)
+            [this.name]: deepAssign({}, this._data || {}, obj)
         });
-        this.data = this.currentPage.data[this.name];
+        this._data = this.currentPage.data[this.name];
     }
 }

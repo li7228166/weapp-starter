@@ -19,9 +19,9 @@ gulp.task('compile:js', () => {
         .pipe(gulp.dest('dist'))
 });
 
-//编译xml文件
-gulp.task('compile:xml', () => {
-    return gulp.src(['app/**/*.xml'])
+//编译html文件
+gulp.task('compile:html', () => {
+    return gulp.src(['app/**/*.html'])
         .pipe(plugins.if(util.isDev, plugins.sourcemaps.init()))
         .pipe(plugins.if(util.isPro, plugins.htmlmin({
             collapseWhitespace: true,
@@ -30,6 +30,9 @@ gulp.task('compile:xml', () => {
             removeScriptTypeAttributes: true,
             removeStyleLinkTypeAttributes: true
         })))
+        .pipe(plugins.replace(/^<template name="(.*?)">[\s\S]*/g, function (content, b, c) {
+            return content.replace(/(bind|catch.*?)=.*?"(.*?)"/g, '$1="' + b + '_$2"');
+        }))
         .pipe(plugins.rename({extname: '.wxml'}))
         .pipe(plugins.if(util.isDev, plugins.sourcemaps.write('.')))
         .pipe(gulp.dest('dist'))
@@ -75,7 +78,7 @@ gulp.task('compile:img', () => {
 gulp.task('compile', ['clean'], next => {
     runSequence([
         'compile:js',
-        'compile:xml',
+        'compile:html',
         'compile:less',
         'compile:json',
         'compile:img'
