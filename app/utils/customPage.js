@@ -1,4 +1,4 @@
-export default function customPage(opt) {
+export default function customPage(opt = {}) {
     return function (TargetClass) {
 
         const onLoad = TargetClass.prototype.onLoad;
@@ -7,6 +7,7 @@ export default function customPage(opt) {
         const onHide = TargetClass.prototype.onHide;
         const onUnload = TargetClass.prototype.onUnload;
         let components = [];
+        opt.declarations = opt.declarations || [];
 
         TargetClass.prototype.onLoad = function () {
             components = opt.declarations.map(Item=> {

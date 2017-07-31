@@ -13,8 +13,14 @@ import homeStore from '../../store/HomeStore'
     declarations: [HomeNotice]
 })
 class Home {
+    constructor() {
+        this.data = {
+            newTip: '我是page传过来的哦'
+        }
+    }
+
     onLoad() {
-        console.log('Home-onLoad');
+        console.log('Home-onLoad1');
     }
 }
 
