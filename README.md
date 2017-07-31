@@ -192,4 +192,4 @@ export default homeStore;
 
 
 具体的效果如下，感兴趣的同学可以copy下该项目，自己跑一下
-![](/li7228166/weapp-starter/raw/master/app/assets/images/weapp-starter-preview.jpg)
+![](app/assets/images/weapp-starter-preview.jpg)
