@@ -1,0 +1,13 @@
+<template name="HomeNotice">
+    <view class="homeNotice">
+        <view class="label" catchtap="aa">商城公告</view>
+        <view class="items">
+            <block wx:for="{{list}}" wx:for-index="i" wx:key="item.productId">
+                <navigator class="link {{currentIndex==i?'active':''}}" url="../product/index?title=navigate"
+                           hover-class="navigator-hover">
+                    {{item.documentTitle}}-{{tip}}
+                </navigator>
+            </block>
+        </view>
+    </view>
+</template>
