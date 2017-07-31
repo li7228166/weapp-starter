@@ -8,6 +8,7 @@ const plugins = gulpLoadPlugins();
 //编译js文件
 gulp.task('compile:js', () => {
     return gulp.src(['app/**/*.js'])
+        .pipe(plugins.changed('dist'))
         .pipe(plugins.if(util.isDev, plugins.sourcemaps.init()))
         .pipe(plugins.babel())
         .on('error', function (err) {
@@ -22,6 +23,7 @@ gulp.task('compile:js', () => {
 //编译html文件
 gulp.task('compile:html', () => {
     return gulp.src(['app/**/*.html'])
+        .pipe(plugins.changed('dist'))
         .pipe(plugins.if(util.isDev, plugins.sourcemaps.init()))
         .pipe(plugins.if(util.isPro, plugins.htmlmin({
             collapseWhitespace: true,
@@ -41,6 +43,7 @@ gulp.task('compile:html', () => {
 //编译less文件
 gulp.task('compile:less', () => {
     return gulp.src(['app/**/*.less'])
+        .pipe(plugins.changed('dist'))
         .pipe(plugins.if(util.isDev, plugins.sourcemaps.init()))
         .pipe(plugins.less())
         .on('error', function (err) {
@@ -57,6 +60,7 @@ gulp.task('compile:less', () => {
 //编译json文件
 gulp.task('compile:json', () => {
     return gulp.src(['app/**/*.json'])
+        .pipe(plugins.changed('dist'))
         .pipe(plugins.if(util.isDev, plugins.sourcemaps.init()))
         .pipe(plugins.if(util.isPro, plugins.jsonminify()))
         .on('error', function (err) {
@@ -70,6 +74,7 @@ gulp.task('compile:json', () => {
 //编译压缩图片文件
 gulp.task('compile:img', () => {
     return gulp.src(['app/**/*.{jpg,jpeg,png,gif}'])
+        .pipe(plugins.changed('dist'))
         .pipe(plugins.imagemin())
         .pipe(gulp.dest('dist'))
 });
