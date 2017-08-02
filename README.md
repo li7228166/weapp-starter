@@ -26,7 +26,8 @@ $ npm run build
 
 
 ### 使用
-pages目录为小程序页面目录，所有的页面都请放在该目录下面，例如Home页面（pages/home/index.js）
+pages目录为小程序页面目录，所有的页面都请放在该目录下面，例如Home页面
+*pages/home/index.js*
 ```
 import customPage from '../../utils/customPage'
 
@@ -40,9 +41,8 @@ class Home {
 Page(Home.instance);
 ```
 
-####使用其他组件
-
-pages/home/index.js
+#### 使用其他组件
+*pages/home/index.js*
 > 这里需要注意的是，含有js逻辑的组件必须在customPage的declarations参数中进行注册，例如下面的HomeNotice
 
 ```
@@ -74,7 +74,7 @@ class Home {
 Page(Home.instance);
 ```
 
-pages/home/index.html
+*pages/home/index.html*
 > 因为HomeNotice含有js逻辑代码，所以这里需要默认传入data="{{...HomeNotice}}"属性,HomeNotice为组件类名
 
 ```
@@ -88,7 +88,7 @@ pages/home/index.html
 </view>
 ```
 
-components/homeNotice/index.js
+*components/homeNotice/index.js*
 > 需要从Component进行继承
 
 ```
@@ -117,7 +117,7 @@ export default class HomeNotice extends Component {
 }
 ```
 
-components/homeNotice/index.html
+*components/homeNotice/index.html*
 > 主要注意的是，&lt;template name="HomeNotice"&gt; 这里的name值必须和组件类名一致
 
 ```
@@ -137,8 +137,8 @@ components/homeNotice/index.html
 ```
 
 
-####使用mobx状态管理库
-pages/home/index.js
+#### 使用mobx状态管理库
+*pages/home/index.js*
 > 同理组件如果使用mobx也和下面的方法一样，这里就不一一列举了
 
 ```
@@ -165,7 +165,7 @@ class Home {
 ...
 ```
 
-pages/home/index.html
+*pages/home/index.html*
 ```
 <view class="container">
     ...
@@ -175,7 +175,7 @@ pages/home/index.html
 </view>
 ```
 
-store/HomeStore.js
+*store/HomeStore.js*
 
 ```
 import {observable, autorun, action} from "../utils/mobx.umd.min";
