@@ -58,11 +58,12 @@ class Home {
 			banner : {
 				"id": "1",
 				"img": "http://www.baidu.cm/logo.png"
-			};
+			},
 			news : [{
 				"id": "1",
 				"title": "春节放假公告"
-			}];
+			}],
+			newsTip:'我是page页面定义的哦'
 		}
     }
     onLoad() {
@@ -81,8 +82,9 @@ pages/home/index.html
     <import src="../../components/homeBanner/index.wxml"/>
     <import src="../../components/homeNotice/index.wxml"/>
 
+	<!--这里传入的数据只可再组件的html文件中使用，暂无法再组件的js逻辑中调用-->
     <template is="HomeBanner" data={{items:banner}}/>
-    <template is="HomeNotice" data="{{...HomeNotice,items:news}}"/>
+    <template is="HomeNotice" data="{{...HomeNotice, items:news, tip:newsTip}}"/>
 </view>
 ```
 
@@ -99,8 +101,8 @@ export default class HomeNotice extends Component {
             currentIndex: 1
         };
         this.events = {
-            aa: (ev)=> {
-                console.log('组件自己的自定义事件')
+            clickHandler: (ev)=> {
+                console.log('组件的自定义事件')
             }
         };
     }
@@ -121,7 +123,7 @@ components/homeNotice/index.html
 ```
 <template name="HomeNotice">
     <view class="homeNotice">
-        <view class="label" catchtap="aa">商城公告</view>
+        <view class="label" catchtap="clickHandler">商城公告</view>
         <view class="items">
             <block wx:for="{{items}}" wx:for-index="i" wx:key="item.productId">
                 <navigator class="link {{currentIndex==i?'active':''}}" url="../product/index?title=navigate"
@@ -152,11 +154,25 @@ import observer from '../../utils/observer'
 })
 class Home {
 	constructor() {
-        this.data={}//这里就不需要再定义初始数据了
+        this.data={}; //就不需要再定义observer中的初始数据了
+    }
+	onLoad() {
+        ...
+		console.log(this.store.banner); //可以通过this.store访问observer中定义的对象
     }
 	...
 }
 ...
+```
+
+pages/home/index.html
+```
+<view class="container">
+    ...
+	<!--html中可以直接访问observer中定义的对象-->
+    <template is="HomeBanner" data={{items:banner}}/>
+    ...
+</view>
 ```
 
 store/HomeStore.js

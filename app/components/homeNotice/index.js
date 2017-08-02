@@ -12,14 +12,11 @@ export default class HomeNotice extends Component {
             currentIndex: 1
         };
         this.events = {
-            aa: (ev)=> {
+            clickHandler: (ev)=> {
                 homeStore.news.push({
                     "documentId": "9045c76b8fe2442986320d32e9fcc9d0",
                     "documentTitle": "春节放假公告111111111"
                 })
-            },
-            bb: ()=> {
-                console.log('bb');
             }
         };
         this.timer = null;
@@ -27,10 +24,10 @@ export default class HomeNotice extends Component {
     }
 
     onShow() {
-        if (this.data.list && this.data.list.length > 1) {
+        if (this.store.list && this.store.list.length > 1) {
             this.timer = setInterval(()=> {
                 let index = this.data.currentIndex + 1;
-                if (index >= this.data.list.length) {
+                if (index >= this.store.list.length) {
                     index = 0;
                 }
                 this.setData({
@@ -41,7 +38,7 @@ export default class HomeNotice extends Component {
     }
 
     onHide() {
-        if (this.data.list && this.data.list.length > 1) {
+        if (this.store.list && this.store.list.length > 1) {
             clearInterval(this.timer);
         }
     }

@@ -1,8 +1,10 @@
 'use strict';
-var isObj = require('./is-obj');
-
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+var isObj = function (x) {
+    var type = typeof x;
+    return x !== null && (type === 'object' || type === 'function');
+};
 
 function toObject(val) {
     if (val === null || val === undefined) {
