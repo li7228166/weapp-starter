@@ -2,7 +2,6 @@
  * Created by Administrator on 2017/3/29.
  */
 import {
-    observable,
     autorun,
     isObservable,
     isObservableArray,
@@ -11,7 +10,6 @@ import {
     isObservableValue,
     toJS
 } from "../utils/mobx.umd.min";
-
 export default function observer(store) {
     return function wrapper(TargetClass) {
         const onLoad = TargetClass.prototype.onLoad;
@@ -27,7 +25,7 @@ export default function observer(store) {
                         obj[key] = toJS(store[key]);
                     }
                     this.store = obj;
-                    this.setData(this.state);
+                    this.setData(this.store);
                 }
             });
             onLoad && onLoad.call(this, ...arguments);
