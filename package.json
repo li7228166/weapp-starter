@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "clean": "gulp clean",
-    "start": "cross-env NODE_ENV=development && gulp default",
-    "build": "cross-env NODE_ENV=production && gulp build"
+    "start": "npm run clean && cross-env NODE_ENV=development && gulp default",
+    "build": "npm run clean && cross-env NODE_ENV=production && gulp build"
   },
   "keywords": [
     "weixin",
@@ -18,9 +18,10 @@
   "license": "ISC",
   "devDependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
-    "babel-preset-stage-1": "^6.22.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.26.0",
     "cross-env": "^3.1.4",
     "del": "^2.2.2",
     "gulp": "^3.9.1",

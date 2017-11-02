@@ -1,41 +1,27 @@
 /**
  * Created by Administrator on 2017/3/29.
  */
-import {
-    autorun,
-    isObservable,
-    isObservableArray,
-    isObservableObject,
-    isObservableMap,
-    isObservableValue,
-    toJS
-} from "../utils/mobx.umd.min";
-export default function observer(store) {
-    return function wrapper(TargetClass) {
-        const onLoad = TargetClass.prototype.onLoad;
-        const onUnload = TargetClass.prototype.onUnload;
-
-        TargetClass.prototype.store = {};
-        TargetClass.prototype.onLoad = function () {
-            this.autorun = autorun(()=> {
-                if (store) {
-                    console.warn('render');
-                    var obj = {};
-                    for (var key in store) {
-                        obj[key] = toJS(store[key]);
-                    }
-                    this.store = obj;
-                    this.setData(this.store);
-                }
-            });
-            onLoad && onLoad.call(this, ...arguments);
-        };
-
-        TargetClass.prototype.onUnload = function () {
-            this.autorun();
-            onUnload && onUnload.call(this, ...arguments);
-        };
-
-        return TargetClass
+import {autorun} from "../utils/mobx.umd.min";
+export default function observer(TargetClass) {
+    let Target = null;
+    if (typeof TargetClass === 'function') {
+        Target = TargetClass.prototype;
+    } else if (typeof TargetClass === 'object') {
+        Target = TargetClass;
     }
+
+    let autorunFn = null;
+    const onLoad = Target.onLoad;
+    const onUnload = Target.onUnload;
+    Target.onLoad = function () {
+        onLoad && onLoad.call(this, ...arguments);
+        autorunFn = Target.render && autorun(()=> {
+                Target.render.call(this);
+                console.info(`${TargetClass.name} render`);
+            });
+    };
+    Target.onUnload = function () {
+        autorunFn && autorunFn();
+        onUnload && onUnload.call(this, ...arguments);
+    };
 }

@@ -2,10 +2,14 @@ import Component from '../../utils/Component';
 import homeStore from '../../store/HomeStore';
 import observer from "../../utils/observer";
 
-@observer({
-    list: homeStore.news
-})
+@observer
 export default class HomeNotice extends Component {
+    render() {
+        this.setData({
+            list: homeStore.news
+        })
+    }
+
     constructor() {
         super();
         this.data = {
@@ -24,10 +28,10 @@ export default class HomeNotice extends Component {
     }
 
     onShow() {
-        if (this.store.list && this.store.list.length > 1) {
+        if (homeStore.news && homeStore.news.length > 1) {
             this.timer = setInterval(()=> {
                 let index = this.data.currentIndex + 1;
-                if (index >= this.store.list.length) {
+                if (index >= homeStore.news.length) {
                     index = 0;
                 }
                 this.setData({
@@ -38,7 +42,7 @@ export default class HomeNotice extends Component {
     }
 
     onHide() {
-        if (this.store.list && this.store.list.length > 1) {
+        if (homeStore.news && homeStore.news.length > 1) {
             clearInterval(this.timer);
         }
     }

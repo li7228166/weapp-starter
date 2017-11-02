@@ -70,8 +70,6 @@ class Home {
         console.log('Home-onLoad');
     }
 }
-
-Page(Home.instance);
 ```
 
 *pages/home/index.html*
@@ -145,20 +143,23 @@ export default class HomeNotice extends Component {
 ...
 import observer from '../../utils/observer'
 
-@observer({
-    banner: homeStore.banner,
-    news: homeStore.news
-})
+@observer
 @customPage({
     declarations: [HomeNotice]
 })
 class Home {
+	render(){
+		this.setData({
+			banner: homeStore.banner,
+			news: homeStore.news
+		})
+	}
 	constructor() {
         this.data={}; //就不需要再定义observer中的初始数据了
     }
 	onLoad() {
         ...
-		console.log(this.store.banner); //可以通过this.store访问observer中定义的对象
+		console.log(homeStore.banner);
     }
 	...
 }
@@ -169,7 +170,7 @@ class Home {
 ```
 <view class="container">
     ...
-	<!--html中可以直接访问observer中定义的对象-->
+	<!--html中可以直接访问render方法中this.setData中的变量-->
     <template is="HomeBanner" data={{items:banner}}/>
     ...
 </view>

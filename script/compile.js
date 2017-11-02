@@ -35,6 +35,8 @@ gulp.task('compile:html', () => {
         .pipe(plugins.replace(/^<template name="(.*?)">[\s\S]*/g, function (content, b, c) {
             return content.replace(/(bind|catch.*?)=.*?"(.*?)"/g, '$1="' + b + '_$2"');
         }))
+        .pipe(plugins.replace(/<script(.*?)>([\s\S]*)<\/script>/g, '<wxs$1>$2</wxs>'))
+        .pipe(plugins.replace(/px;/g, 'rpx;'))
         .pipe(plugins.rename({extname: '.wxml'}))
         .pipe(plugins.if(util.isDev, plugins.sourcemaps.write('.')))
         .pipe(gulp.dest('dist'))

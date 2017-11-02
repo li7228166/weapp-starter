@@ -1,6 +1,5 @@
 import homeStore from '../../store/HomeStore'
 
-
 Page({
     data: {},
     aaa: function () {

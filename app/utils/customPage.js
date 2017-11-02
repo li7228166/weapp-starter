@@ -1,60 +1,63 @@
 export default function customPage(opt = {}) {
+    opt.declarations = opt.declarations || [];
     return function (TargetClass) {
-
-        const onLoad = TargetClass.prototype.onLoad;
-        const onShow = TargetClass.prototype.onShow;
-        const onReady = TargetClass.prototype.onReady;
-        const onHide = TargetClass.prototype.onHide;
-        const onUnload = TargetClass.prototype.onUnload;
+        const filterFnNames = ['constructor', 'onLoad', 'onShow', 'onReady', 'onHide', 'onUnload'];
+        const names = Object.getOwnPropertyNames(TargetClass.prototype);
         let components = [];
-        opt.declarations = opt.declarations || [];
+        let target = new TargetClass();
 
-        TargetClass.prototype.onLoad = function () {
-            components = opt.declarations.map(Item=> {
-                const item = new Item();
-                item.onLoad && item.onLoad();
-                return item;
-            });
-            onLoad && onLoad.call(this, ...arguments);
+        //构建基础object
+        let page = {
+            data: target.data || {},
+            onLoad: function () {
+                components = opt.declarations.map(Item=> {
+                    const item = new Item();
+                    item.onLoad && item.onLoad(...arguments);
+                    return item;
+                });
+                target.onLoad && target.onLoad.call(this, ...arguments);
+            },
+            onShow: function () {
+                components.map(item=> {
+                    item.onShow && item.onShow(...arguments);
+                });
+                target.onShow && target.onShow.call(this, ...arguments);
+            },
+            onReady: function () {
+                components.map(item=> {
+                    item.onReady && item.onReady(...arguments);
+                });
+                target.onReady && target.onReady.call(this, ...arguments);
+            },
+            onHide: function () {
+                components.map(item=> {
+                    item.onHide && item.onHide(...arguments);
+                });
+                target.onHide && target.onHide.call(this, ...arguments);
+            },
+            onUnload: function () {
+                components.map(item=> {
+                    item.onUnload && item.onUnload(...arguments);
+                });
+                target.onUnload && target.onUnload.call(this, ...arguments);
+            }
         };
 
-        TargetClass.prototype.onShow = function () {
-            components.map(item=> {
-                item.onShow && item.onShow();
-            });
-            onShow && onShow.call(this, ...arguments);
-        };
-
-        TargetClass.prototype.onReady = function () {
-            components.map(item=> {
-                item.onReady && item.onReady();
-            });
-            onReady && onReady.call(this, ...arguments);
-        };
-
-        TargetClass.prototype.onHide = function () {
-            components.map(item=> {
-                item.onHide && item.onHide();
-            });
-            onHide && onHide.call(this, ...arguments);
-        };
-
-        TargetClass.prototype.onUnload = function () {
-            components.map(item=> {
-                item.onUnload && item.onUnload();
-            });
-            onUnload && onUnload.call(this, ...arguments);
-        };
-
-        const target = new TargetClass();
-        if (!target.data) {
-            target.data = {};
-        }
+        //合并组件data
         opt.declarations.map(item=> {
-            target.data[item.name] = {};
+            page.data[item.name] = {};
         });
-        TargetClass.instance = target;
 
-        return TargetClass
+        //合并原型链上的方法
+        for (let key in names) {
+            if (filterFnNames.indexOf(names[key]) > -1 || page[names[key]]) {
+                continue;
+            }
+            page[names[key]] = function () {
+                TargetClass.prototype[names[key]].call(this, ...arguments)
+            }
+        }
+
+        Page(page);
     }
 }
